@@ -15,7 +15,7 @@ export const back2front = (chat: backendChat): frontendChat => {
     message: chat.content,
     avaterName: (chat.role === "assistant" ? "Akira" : ""),
     avaterSrc: (chat.role === "assistant"
-      ? "https://chatscope.io/storybook/react/assets/emily-xzL8sDL2.svg"
+      ? "https://raw.githubusercontent.com/Kosei805/demo_chat/main/images/avaterLogo/akira_icon.svg"
       : undefined
     )
   }

@@ -22,7 +22,7 @@ const MessageComponents: React.FC<MessageComponentsProps> = ({allChats}) => {
         direction='incoming'
         message='こんにちは'
         avaterName='Akira'
-        avaterSrc='https://chatscope.io/storybook/react/assets/emily-xzL8sDL2.svg'
+        avaterSrc='https://raw.githubusercontent.com/Kosei805/demo_chat/main/images/avaterLogo/akira_icon.svg'
       />
       {mapParts}
     </>
