@@ -21,6 +21,12 @@ export const back2front = (chat: backendChat): frontendChat => {
   }
 }
 
+// const backMulti2front = (chat: backendChat): frontendChat => {
+//   return {
+    
+//   }
+// }
+
 const makePrompt = (modelName: string, chatData: Array<backendChat>): string => {
   let prompt = ""
   let target = 0
@@ -45,14 +51,51 @@ const makePrompt = (modelName: string, chatData: Array<backendChat>): string => 
   return "Model is not exist."
 }
 
+const makeMultiPrompt = (modelName: string, chatData: Array<frontendChat>): string => {
+  let prompt = ""
+  let target = 0
+  switch(true){
+    case !!modelName.toLowerCase().includes("gemma-2-9b-it"):
+      if (chatData[target]["direction"] === "incoming") {
+        prompt = "<start_of_turn>system\n" + chatData[0]["message"] + "<end_if_turn>\n"
+        target += 1
+      }
+      for (let i = target; i < chatData.length; i++) {
+        switch (chatData[i]["direction"]) {
+          case "outgoing":
+            prompt = prompt + "<start_of_turn>user\n" + chatData[i]["message"] + "<end_if_turn>\n"
+            break
+          case "incoming":
+            prompt = prompt + "<start_of_turn>model\n" + chatData[i]["avaterName"] + "「" + chatData[i]["message"] + "」<end_if_turn>\n"
+            break
+        }
+      }
+      return prompt + "<start_of_turn>model\n"
+  }
+  return "Model is not exist."
+}
+
 const getResponse = async (chatHistory: Array<backendChat>) => {
-  // const llmUrl = process.env.REACT_APP_LLM_API
-  const llmUrl = "http://192.168.100.217:8080/completion"
+  const llmUrl = process.env.REACT_APP_LLM_API
+  // const llmUrl = "http://192.168.100.217:8080/completion"
   if (!llmUrl) return "errorが発生しました"
   console.log(chatHistory)
   console.log(makePrompt("bartowski/Gemma-2-9B-It-SPPO-Iter3-GGUF",chatHistory))
   return axios.post(llmUrl, {
     prompt: makePrompt("bartowski/Gemma-2-9B-It-SPPO-Iter3-GGUF",chatHistory),
+    n_predict: 512
+  })
+  .then((response: AxiosResponse<backendResponse>) => {
+    return response.data.content
+  })
+}
+
+const getMultiResponse = async (chatHistory: Array<frontendChat>) => {
+  const llmUrl = process.env.REACT_APP_LLM_API
+  // const llmUrl = "http://192.168.100.217:8080/completion"
+  if (!llmUrl) return "errorが発生しました"
+  return axios.post(llmUrl, {
+    prompt: makeMultiPrompt("bartowski/Gemma-2-9B-It-SPPO-Iter3-GGUF",chatHistory),
     n_predict: 512
   })
   .then((response: AxiosResponse<backendResponse>) => {
@@ -74,4 +117,19 @@ export const sendMessage = (
         setTyping(false)
       }
     )
+}
+
+export const sendMultiMessage = (
+  setTyping: React.Dispatch<React.SetStateAction<boolean>>,
+  setChat: React.Dispatch<React.SetStateAction<frontendChat[]>>,
+  allChats: Array<frontendChat>
+) => {
+setTyping(true)
+getMultiResponse(allChats)
+  .then(
+    (reply) => {
+      setChat(allChats.concat(back2front({role: "assistant", content: reply})))
+      setTyping(false)
+    }
+  )
 }

@@ -1,5 +1,5 @@
 import { Layout, theme } from 'antd'
-import React from 'react'
+import React, {useState} from 'react'
 import HeaderComponents from './HeaderComponents'
 import BodyComponents from './BodyConponents'
 import FooterComponents from './FooterComponents'
@@ -12,6 +12,7 @@ type MainContentsProps = {
 
 
 const MainContents: React.FC<MainContentsProps> = ({collapsed, setCollapsed}) => {
+  const [mode, setMode] = useState<'single' | 'multi'>('single')
   const {
     token: { colorBgContainer, borderRadiusLG }
   } = theme.useToken()
@@ -24,6 +25,7 @@ const MainContents: React.FC<MainContentsProps> = ({collapsed, setCollapsed}) =>
           collapsed={collapsed}
           setCollapsed={setCollapsed}
           backgroundColorData={colorBgContainer}
+          setModeFunc={setMode}
         />
         <BodyComponents
           backgroundColorData={colorBgContainer}

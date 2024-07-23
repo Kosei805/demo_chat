@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Layout } from 'antd'
+import { Button, Layout, Menu } from 'antd'
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined
@@ -9,14 +9,29 @@ type HeaderContentsProps = {
   collapsed: boolean
   setCollapsed: React.Dispatch<React.SetStateAction<boolean>>
   backgroundColorData: string
+  setModeFunc: React.Dispatch<React.SetStateAction<'single' | 'multi'>>
 }
 
 const { Header } = Layout
 
-const HeaderComponents: React.FC<HeaderContentsProps> = ({ collapsed, setCollapsed, backgroundColorData }) => {
+const HeaderComponents: React.FC<HeaderContentsProps> = ({ collapsed, setCollapsed, backgroundColorData, setModeFunc }) => {
+  const headerStyle = {
+    padding: 0,
+    background: backgroundColorData,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  }
+
+  const menuStyle = {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'flex-start',
+  }
+
   return (
     <Header
-      style={{ padding:0, background: backgroundColorData }}  
+      style={headerStyle}
     >
       <Button
         type='text'
@@ -28,6 +43,15 @@ const HeaderComponents: React.FC<HeaderContentsProps> = ({ collapsed, setCollaps
           height: 64,
         }}
       />
+      <Menu
+        style={menuStyle}
+        mode='horizontal'
+        defaultSelectedKeys={['single']}
+        onClick={(e) => {setModeFunc(e.key as 'single' | 'multi')}}
+      >
+        <Menu.Item key='single'>Single User</Menu.Item>
+        <Menu.Item key='multi'>Multi User</Menu.Item>
+      </Menu>
     </Header>
   )
 }
