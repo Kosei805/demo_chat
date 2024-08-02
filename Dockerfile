@@ -7,9 +7,6 @@ WORKDIR /app
 # ホストマシンからコンテナにコピー
 COPY . /app/
 
-# アプリケーションのインポート
-RUN yarn import
-
 # 依存関係のインストール
 RUN yarn install
 
