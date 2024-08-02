@@ -25,7 +25,7 @@ const Akira: AvaterType = {
 
 const Kazuma: AvaterType = {
   name: "福田 一真",
-  src: "images/avaterLogo/kazuma_icon.svg", // 画像パスは適宜設定してください
+  src: "https://raw.githubusercontent.com/Kosei805/demo_chat/add-multi-user-mode%231/images/avaterLogo/kazuma_icon.svg", 
   shortSetting: "物静かで内向的な大学生。読書と散歩が好きで、将来は作家になることを夢見ている。",
   avaterPrompt: {
     age: 20, // 大学生の年齢を想定
@@ -48,7 +48,7 @@ const Kazuma: AvaterType = {
 
 const Maki: AvaterType = {
   name: "間 真希",
-  src: "images/avaterLogo/maki_icon.svg", // 画像パスは適宜設定してください
+  src: "https://raw.githubusercontent.com/Kosei805/demo_chat/add-multi-user-mode%231/images/avaterLogo/maki_icon.svg",
   shortSetting: "明るく社交的で好奇心旺盛な大学生",
   avaterPrompt: {
     age: 20,
@@ -74,7 +74,7 @@ const Maki: AvaterType = {
 
 const Mizuki: AvaterType = {
   name: "生稲 美月",
-  src: "images/avaterLogo/mizuki_icon.svg", // 画像パスは適宜設定してください
+  src: "https://raw.githubusercontent.com/Kosei805/demo_chat/add-multi-user-mode%231/images/avaterLogo/mizuki_icon.svg",
   shortSetting: "静かで内向的な観察力に優れた女子大生",
   avaterPrompt: {
     age: 20, 
@@ -99,7 +99,7 @@ const Mizuki: AvaterType = {
 
 const Sota: AvaterType = {
   name: "広沢 颯太",
-  src: "images/avaterLogo/sota_icon.svg", // 画像URLを設定してください
+  src: "https://raw.githubusercontent.com/Kosei805/demo_chat/add-multi-user-mode%231/images/avaterLogo/sota_icon.svg", // 画像URLを設定してください
   shortSetting: "明るく社交的で、好奇心旺盛な大学生",
   avaterPrompt: {
     age: 20,
