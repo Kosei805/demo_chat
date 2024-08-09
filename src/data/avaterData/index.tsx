@@ -121,3 +121,5 @@ const Sota: AvaterType = {
     }
   }
 };
+
+export const avaterData: AvaterType[] = [Akira, Kazuma, Maki, Mizuki, Sota]

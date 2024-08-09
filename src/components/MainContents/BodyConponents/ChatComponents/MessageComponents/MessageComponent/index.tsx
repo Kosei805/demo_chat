@@ -21,6 +21,7 @@ const MessageComponent: React.FC<frontendChat> = ({
       }}
     >
       { avaterSrc && <Avatar name={avaterName} src={avaterSrc}/>}
+      { avaterSrc && <Message.Header sender={avaterName} /> }
     </Message>
   )
 }

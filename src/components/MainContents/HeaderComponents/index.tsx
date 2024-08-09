@@ -4,17 +4,27 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined
 } from '@ant-design/icons'
+import { ChatRoomType } from '../../../@types/chatRoomType'
+import { makeNewChatRoom } from '../../../util/chatRoom'
 
 type HeaderContentsProps = {
   collapsed: boolean
   setCollapsed: React.Dispatch<React.SetStateAction<boolean>>
   backgroundColorData: string
-  setModeFunc: React.Dispatch<React.SetStateAction<'single' | 'multi'>>
+  setChatRoomFunc: React.Dispatch<React.SetStateAction<ChatRoomType>>
+  setMakingChatRoom: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const { Header } = Layout
 
-const HeaderComponents: React.FC<HeaderContentsProps> = ({ collapsed, setCollapsed, backgroundColorData, setModeFunc }) => {
+const HeaderComponents: React.FC<HeaderContentsProps> = ({ collapsed, setCollapsed, backgroundColorData, setChatRoomFunc, setMakingChatRoom }) => {
+  const makeRoom = async (mode: "single" | "multi") => {
+    console.log('makeRoom')
+    setMakingChatRoom(true)
+    const newRoom = await makeNewChatRoom(mode)
+    setChatRoomFunc(newRoom)
+    setMakingChatRoom(false)
+  }
   const headerStyle = {
     padding: 0,
     background: backgroundColorData,
@@ -47,7 +57,7 @@ const HeaderComponents: React.FC<HeaderContentsProps> = ({ collapsed, setCollaps
         style={menuStyle}
         mode='horizontal'
         defaultSelectedKeys={['single']}
-        onClick={(e) => {setModeFunc(e.key as 'single' | 'multi')}}
+        onClick={(e) => {makeRoom(e.key as "single" | "multi")}}
       >
         <Menu.Item key='single'>Single User</Menu.Item>
         <Menu.Item key='multi'>Multi User</Menu.Item>

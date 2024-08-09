@@ -2,7 +2,7 @@ export interface AvaterType {
   name: string
   src: string
   shortSetting: string
-  avaterPrompt?: AvaterPromptType
+  avaterPrompt: AvaterPromptType
 }
 
 interface AvaterPromptType {

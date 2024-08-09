@@ -5,11 +5,16 @@ import {
 } from '@chatscope/chat-ui-kit-react'
 import MessageComponents from './MessageComponents'
 import { frontendChat } from '../../../../@types'
-import { sendMessage } from '../../../../util'
+import { sendMessage } from '../../../../util/chat'
+import { ChatRoomType } from '../../../../@types/chatRoomType'
 
-const ChatComponents = () => {
+type ChatComponentsProps = {
+  nowChatRoom: ChatRoomType
+}
+
+const ChatComponents: React.FC<ChatComponentsProps> = ({nowChatRoom}) => {
   const [chatAll, setChatALl] = useState<frontendChat[]>([])
-  const [nowTyping, setNowTyping] = useState(false)
+  const [nowTyping, setNowTyping] = useState<undefined| string>(undefined)
 
   const updateChat = (message: string) => {
     const nextChat = chatAll.concat({
@@ -18,7 +23,7 @@ const ChatComponents = () => {
       avaterName: ""
     })
     setChatALl(nextChat)
-    sendMessage(setNowTyping,setChatALl,nextChat)
+    sendMessage(setNowTyping,setChatALl,nextChat,nowChatRoom)
   }
 
   return (
@@ -26,9 +31,12 @@ const ChatComponents = () => {
   <MainContainer>
     <ChatContainer>
       <MessageList
-        typingIndicator={nowTyping ? <TypingIndicator content="Emily is typing" />: undefined}
+        typingIndicator={nowTyping ? <TypingIndicator content={nowTyping} />: undefined}
       >
-        <MessageComponents allChats={chatAll}/>
+        <MessageComponents
+          allChats={chatAll}
+          nowChatRoom={nowChatRoom}  
+        />
       </MessageList>
       <MessageInput
         placeholder="Type message here"
